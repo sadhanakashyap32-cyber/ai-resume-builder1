@@ -1,8 +1,73 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Resume Builder</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #4f46e5;
+}
+
+form {
+    display: flex;          
+    flex-direction: column; /* stack fields vertically */
+    width: 400px;           
+    gap: 15px;              /* vertical spacing between fields */
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+}
+
+input, textarea, button {
+    width: 100%;            /* make each field full width */
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box; /* ensures padding doesn’t break width */
+}
+
+button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #3730a3;
+}
+
+footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+</style>
+</head>
+<body>
+
+<h1>AI Resume Builder</h1>
+
 <form id="resumeForm">
     <input type="text" id="name" placeholder="Your Name" required>
     <input type="email" id="email" placeholder="Your Email" required>
     
-    <!-- Resume fields -->
     <input type="text" id="education" placeholder="Education (e.g. BCA)" required>
     <input type="text" id="branch" placeholder="Branch / Major" required>
     <input type="text" id="skills" placeholder="Skills (comma separated)" required>
@@ -12,4 +77,41 @@
     
     <button type="submit">Submit Resume</button>
 </form>
+
+<footer>
+    &copy; 2026 | Powered by <a href="https://vercel.com" target="_blank">Vercel</a>
+</footer>
+
+<script>
+const supabaseUrl = "https://rtoknogjcogfehddfsnq.supabase.co";
+const supabaseKey = "sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I";
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+document.getElementById('resumeForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const education = document.getElementById('education').value;
+    const branch = document.getElementById('branch').value;
+    const skills = document.getElementById('skills').value;
+    const projects = document.getElementById('projects').value;
+    const message = document.getElementById('message').value;
+
+    const { data, error } = await supabase.from('resumes').insert([
+        { name, email, education, branch, skills, projects, message }
+    ]);
+
+    if (error) {
+        alert("Error: " + error.message);
+    } else {
+        alert("Resume submitted successfully!");
+        document.getElementById('resumeForm').reset();
+    }
+});
+</script>
+
+</body>
+</html>
+
+
 
