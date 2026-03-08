@@ -1,74 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Sadhana's AI Resume Builder</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<title>Sadhana's AI Resume Builder</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
 
-        header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
+header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
 
-        header img {
-            width: 60px;
-            height: 60px;
-        }
+header img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-            color: #4f46e5;
-        }
+header h1 {
+    font-size: 28px;
+    color: #4f46e5;
+    margin: 0;
+}
 
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 350px;
-            gap: 10px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-        }
+form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 12px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+}
 
-        input, textarea, button {
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 16px;
-        }
+input, textarea, button {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
 
-        button {
-            background-color: #4f46e5;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+button {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
 
-        button:hover {
-            background-color: #3730a3;
-        }
+button:hover {
+    background-color: #3730a3;
+}
 
-        footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #666;
-        }
-    </style>
+footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #555;
+}
+
+footer a {
+    text-decoration: none;
+    color: #4f46e5;
+}
+</style>
 </head>
 <body>
 
@@ -80,7 +89,7 @@
 <form id="resumeForm">
     <input type="text" id="name" placeholder="Your Name" required>
     <input type="email" id="email" placeholder="Your Email" required>
-    <textarea id="message" placeholder="Message / Resume Details"></textarea>
+    <textarea id="message" placeholder="Message / Resume Details" rows="5"></textarea>
     <button type="submit">Submit Resume</button>
 </form>
 
@@ -89,32 +98,28 @@
 </footer>
 
 <script>
-const supabaseUrl = "https://rtoknogjcogfehddfsnq.supabase.co"
-const supabaseKey = "sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I"
-const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+const supabaseUrl = "https://rtoknogjcogfehddfsnq.supabase.co";
+const supabaseKey = "sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I";
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.getElementById('resumeForm').addEventListener('submit', async (e) => {
-    e.preventDefault()
-
-    const name = document.getElementById('name').value
-    const email = document.getElementById('email').value
-    const message = document.getElementById('message').value
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
 
     const { data, error } = await supabase.from('resumes').insert([
         { name, email, message }
-    ])
+    ]);
 
     if (error) {
-        alert("Error: " + error.message)
+        alert("Error: " + error.message);
     } else {
-        alert("Resume submitted successfully!")
-        document.getElementById('resumeForm').reset()
+        alert("Resume submitted successfully!");
+        document.getElementById('resumeForm').reset();
     }
-})
+});
 </script>
 
 </body>
 </html>
-
-
-
