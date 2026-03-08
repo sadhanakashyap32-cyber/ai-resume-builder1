@@ -1,17 +1,21 @@
-function generateResume(){
+const form = document.getElementById('resumeForm');
+const resumeOutput = document.getElementById('resumeOutput');
 
-var name = document.getElementById("name").value;
-var branch = document.getElementById("branch").value;
-var gmail = document.getElementById("gmail").value;
-var skills = document.getElementById("skills").value;
-var experience = document.getElementById("experience").value;
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
 
-var resume = "<h2>" + name + "</h2>" +
-"<p><b>Branch:</b> " + branch + "</p>" +
-"<p><b>Gmail:</b> " + gmail + "</p>" +
-"<p><b>Skills:</b> " + skills + "</p>" +
-"<p><b>Experience:</b> " + experience + "</p>";
+    // Fill resume with form data
+    document.getElementById('resName').innerText = document.getElementById('name').value;
+    document.getElementById('resTitle').innerText = document.getElementById('title').value;
+    document.getElementById('resContact').innerText = `Email: ${document.getElementById('email').value} | Phone: ${document.getElementById('phone').value}`;
+    document.getElementById('resGitHub').innerHTML = `GitHub: <a href="${document.getElementById('github').value}" target="_blank">${document.getElementById('github').value}</a>`;
+    document.getElementById('resSummary').innerText = document.getElementById('summary').value;
+    document.getElementById('resEducation').innerText = document.getElementById('education').value;
+    document.getElementById('resSkills').innerText = document.getElementById('skills').value;
+    document.getElementById('resProjects').innerText = document.getElementById('projects').value;
+    document.getElementById('resExperience').innerText = document.getElementById('experience').value;
 
-document.getElementById("output").innerHTML = resume;
-
-}
+    // Hide form and show resume
+    form.style.display = 'none';
+    resumeOutput.style.display = 'block';
+});

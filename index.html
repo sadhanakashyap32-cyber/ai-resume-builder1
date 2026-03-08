@@ -3,62 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume Template</title>
+    <title>AI Resume Builder</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1 contenteditable="true">Full Name</h1>
-            <p contenteditable="true">Professional Title | Area of Expertise</p>
-            <p contenteditable="true">Email: your.email@example.com | Phone: 1234567890</p>
-            <p contenteditable="true">GitHub: github.com/username</p>
-        </header>
 
-        <section>
+        <h1>AI Resume Builder</h1>
+
+        <!-- Form for user input -->
+        <form id="resumeForm">
+            <h2>Personal Info</h2>
+            <input type="text" placeholder="Full Name" id="name" required>
+            <input type="text" placeholder="Title/Profession" id="title" required>
+            <input type="email" placeholder="Email" id="email" required>
+            <input type="text" placeholder="Phone" id="phone" required>
+            <input type="text" placeholder="GitHub URL" id="github">
+
             <h2>Profile Summary</h2>
-            <p contenteditable="true">Write a brief summary about yourself here...</p>
-        </section>
+            <textarea placeholder="Write a short summary about yourself..." id="summary"></textarea>
 
-        <section>
             <h2>Education</h2>
-            <ul>
-                <li contenteditable="true">Degree – College Name, Year</li>
-                <li contenteditable="true">Intermediate – School Name, Year</li>
-                <li contenteditable="true">High School – School Name, Year</li>
-            </ul>
-        </section>
+            <textarea placeholder="Degree – College Name, Year" id="education"></textarea>
 
-        <section>
             <h2>Skills</h2>
-            <ul>
-                <li contenteditable="true">Programming: Java, C, Python, etc.</li>
-                <li contenteditable="true">Tools: Excel, Power BI, Git/GitHub</li>
-                <li contenteditable="true">Other: Communication, Teamwork</li>
-            </ul>
-        </section>
+            <textarea placeholder="List your skills separated by commas" id="skills"></textarea>
 
-        <section>
             <h2>Projects</h2>
-            <ul>
-                <li contenteditable="true">Project Name – Brief description</li>
-                <li contenteditable="true">Project Name – Brief description</li>
-            </ul>
-        </section>
+            <textarea placeholder="Project Name – Description" id="projects"></textarea>
 
-        <section>
-            <h2>Internships / Experience</h2>
-            <ul>
-                <li contenteditable="true">Company Name – Role, Duration</li>
-            </ul>
-        </section>
+            <h2>Experience</h2>
+            <textarea placeholder="Company – Role, Duration" id="experience"></textarea>
 
-        <footer>
-            <p>© <span contenteditable="true">Year</span> Your Name</p>
-        </footer>
+            <button type="submit">Generate Resume</button>
+        </form>
+
+        <!-- Resume display -->
+        <div id="resumeOutput" class="resume" style="display:none;">
+            <header>
+                <h1 id="resName"></h1>
+                <p id="resTitle"></p>
+                <p id="resContact"></p>
+                <p id="resGitHub"></p>
+            </header>
+
+            <section>
+                <h2>Profile Summary</h2>
+                <p id="resSummary"></p>
+            </section>
+
+            <section>
+                <h2>Education</h2>
+                <p id="resEducation"></p>
+            </section>
+
+            <section>
+                <h2>Skills</h2>
+                <p id="resSkills"></p>
+            </section>
+
+            <section>
+                <h2>Projects</h2>
+                <p id="resProjects"></p>
+            </section>
+
+            <section>
+                <h2>Experience</h2>
+                <p id="resExperience"></p>
+            </section>
+        </div>
+
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
