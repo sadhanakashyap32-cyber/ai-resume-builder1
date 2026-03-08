@@ -1,44 +1,66 @@
-<script>
-const supabaseUrl = "https://rtoknogjcogfehddfsnq.supabase.co";
-const supabaseKey = "sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I";
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sadhana Kashyap - Resume</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sadhana Kashyap</h1>
+            <p>BCA Final Year Student | Web & IT Enthusiast</p>
+            <p>Email: sadhanakashyap32@gmail.com | Phone: 8073235599</p>
+            <p>GitHub: <a href="https://github.com/sadhanakashyap" target="_blank">github.com/sadhanakashyap</a></p>
+        </header>
 
-document.getElementById('resumeForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+        <section>
+            <h2>Profile Summary</h2>
+            <p>Motivated BCA student with a strong academic background. Skilled in Java, C, Python, HTML, Excel, and Power BI. Quick learner and passionate about technology and IT solutions.</p>
+        </section>
 
-    const name = document.getElementById('name').value;
-    const branch = document.getElementById('branch').value;
-    const email = document.getElementById('email').value;
-    const skills = document.getElementById('skills').value;
-    const experience = document.getElementById('experience').value;
+        <section>
+            <h2>Education</h2>
+            <ul>
+                <li>BCA – Final Year, [Your College Name], [Year]</li>
+                <li>Intermediate – [School Name], [Year]</li>
+                <li>High School – [School Name], [Year]</li>
+            </ul>
+        </section>
 
-    // Insert into Supabase
-    const { data, error } = await supabase.from('resumes').insert([
-        { name, branch, email, skills, experience }
-    ]);
+        <section>
+            <h2>Skills</h2>
+            <ul>
+                <li>Programming: Java, C, Python, HTML, CSS, JavaScript</li>
+                <li>Tools: Excel, Power BI, Git/GitHub</li>
+                <li>Other: Problem-solving, Communication, Teamwork</li>
+            </ul>
+        </section>
 
-    if (error) {
-        alert("Error: " + error.message);
-        return;
-    }
+        <section>
+            <h2>Projects</h2>
+            <ul>
+                <li>AI Resume Builder – Next.js & JavaScript based project</li>
+                <li>[Add other projects]</li>
+            </ul>
+        </section>
 
-    // Generate resume output
-    const output = `
-        <h2>${name}</h2>
-        <p><strong>Branch:</strong> ${branch}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Skills:</strong> ${skills}</p>
-        <p><strong>Experience:</strong> ${experience}</p>
-    `;
-    const resumeDiv = document.getElementById('resumeOutput');
-    resumeDiv.innerHTML = output;
-    resumeDiv.style.display = 'block';
+        <section>
+            <h2>Internships / Experience</h2>
+            <ul>
+                <li>[Company/Internship Name] – [Role], [Year]</li>
+            </ul>
+        </section>
 
-    // Keep the resume displayed, do NOT reset resumeOutput
-    // Optional: reset the form fields for new input
-    document.getElementById('resumeForm').reset();
-});
-</script>
+        <footer>
+            <p>© 2026 Sadhana Kashyap</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+
 
 
 
