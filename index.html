@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Resume Builder</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <button onclick="loginWithGoogle()">
+Login with Google
+</button>
+<script>
+
+const supabase = supabase.createClient(
+"https://rtoknogjcogfehddfsnq.supabase.co",
+"sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I"
+
+)
+
+async function loginWithGoogle() {
+await supabase.auth.signInWithOAuth({
+provider: "google"
+})
+}
+
+</script>
+
     <div class="container">
 
         <h1>AI Resume Builder</h1>
