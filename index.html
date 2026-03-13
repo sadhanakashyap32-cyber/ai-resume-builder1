@@ -1,135 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Builder</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <button onclick="loginWithGoogle()">
-Login with Google
-</button>
-<script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Resume Builder</title>
 
-const supabase = supabase.createClient(
-"https://rtoknogjcogfehddfsnq.supabase.co",
-"sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I"
-
-)
-
-async function loginWithGoogle() {
-await supabase.auth.signInWithOAuth({
-provider: "google"
-})
-}
-
-</script>
-
-    <div class="container">
-
-        <h1>AI Resume Builder</h1>
-
-        <!-- Form for user input -->
-        <form id="resumeForm">
-            <h2>Personal Info</h2>
-            <input type="text" placeholder="Full Name" id="name" required>
-            <input type="text" placeholder="Title/Profession" id="title" required>
-            <input type="email" placeholder="Email" id="email" required>
-            <input type="text" placeholder="Phone" id="phone" required>
-            <input type="text" placeholder="GitHub URL" id="github">
-
-            <h2>Profile Summary</h2>
-            <textarea placeholder="Write a short summary about yourself..." id="summary"></textarea>
-
-            <h2>Education</h2>
-            <textarea placeholder="Degree – College Name, Year" id="education"></textarea>
-
-            <h2>Skills</h2>
-            <textarea placeholder="List your skills separated by commas" id="skills"></textarea>
-
-            <h2>Projects</h2>
-            <textarea placeholder="Project Name – Description" id="projects"></textarea>
-
-            <h2>Experience</h2>
-            <textarea placeholder="Company – Role, Duration" id="experience"></textarea>
-
-            <button type="submit">Generate Resume</button>
-        </form>
-
-        <!-- Resume display -->
-        <div id="resumeOutput" class="resume" style="display:none;">
-            <header>
-                <h1 id="resName"></h1>
-                <p id="resTitle"></p>
-                <p id="resContact"></p>
-                <p id="resGitHub"></p>
-            </header>
-
-            <section>
-                <h2>Profile Summary</h2>
-                <p id="resSummary"></p>
-            </section>
-
-            <section>
-                <h2>Education</h2>
-                <p id="resEducation"></p>
-            </section>
-
-            <section>
-                <h2>Skills</h2>
-                <p id="resSkills"></p>
-            </section>
-
-            <section>
-                <h2>Projects</h2>
-                <p id="resProjects"></p>
-            </section>
-
-            <section>
-                <h2>Experience</h2>
-                <p id="resExperience"></p>
-            </section>
-        </div>
-
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-<select onchange="document.body.className=this.value">
-<option value="template1">Template 1</option>
-<option value="template2">Template 2</option>
-<option value="template3">Template 3</option>
-<option value="template4">Template 4</option>
-<option value="template5">Template 5</option>
-<option value="template6">Template 6</option>
-<option value="template7">Template 7</option>
-<option value="template8">Template 8</option>
-</select>
+<link rel="stylesheet" href="style.css">
 
 <!-- Supabase Library -->
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Resume Builder</h1>
+
 <button id="loginBtn">Login with Google</button>
 
+<!-- Form -->
+<form id="resumeForm">
+
+<h2>Personal Info</h2>
+
+<input type="text" placeholder="Full Name" id="name" required>
+<input type="text" placeholder="Title/Profession" id="title" required>
+<input type="email" placeholder="Email" id="email" required>
+<input type="text" placeholder="Phone" id="phone" required>
+<input type="text" placeholder="GitHub URL" id="github">
+
+<h2>Profile Summary</h2>
+<textarea placeholder="Write a short summary..." id="summary"></textarea>
+
+<h2>Education</h2>
+<textarea placeholder="Degree – College – Year" id="education"></textarea>
+
+<h2>Skills</h2>
+<textarea placeholder="Skills separated by commas" id="skills"></textarea>
+
+<h2>Projects</h2>
+<textarea placeholder="Project name – description" id="projects"></textarea>
+
+<h2>Experience</h2>
+<textarea placeholder="Company – Role – Duration" id="experience"></textarea>
+
+<button type="submit">Generate Resume</button>
+
+</form>
+
+</div>
+
+<!-- Supabase Login Script -->
 <script>
 
 const supabaseUrl = "https://rtoknogjcogfehddfsnq.supabase.co"
 const supabaseKey = "sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I"
 
-const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+const { createClient } = supabase
+const supabaseClient = createClient(supabaseUrl, supabaseKey)
 
-document.getElementById("loginBtn").onclick = async function () {
+document.getElementById("loginBtn").addEventListener("click", async () => {
+
   await supabaseClient.auth.signInWithOAuth({
     provider: "google"
   })
-}
+
+})
 
 </script>
+
+</body>
+</html>
+
 
 
 
