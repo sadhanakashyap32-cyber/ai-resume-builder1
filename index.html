@@ -111,6 +111,25 @@ provider: "google"
 <option value="template8">Template 8</option>
 </select>
 
+<!-- Supabase Library -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<button id="loginBtn">Login with Google</button>
+
+<script>
+
+const supabaseUrl = "https://rtoknogjcogfehddfsnq.supabase.co"
+const supabaseKey = "sb_publishable_mMtW6DjuXKa0EDk0qBWxJw_adTFaX9I"
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+
+document.getElementById("loginBtn").onclick = async function () {
+  await supabaseClient.auth.signInWithOAuth({
+    provider: "google"
+  })
+}
+
+</script>
 
 
 
