@@ -1,21 +1,30 @@
-const form = document.getElementById('resumeForm');
-const resumeOutput = document.getElementById('resumeOutput');
+document.getElementById("resumeForm").addEventListener("submit", function(e){
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
+e.preventDefault()
 
-    // Fill resume with form data
-    document.getElementById('resName').innerText = document.getElementById('name').value;
-    document.getElementById('resTitle').innerText = document.getElementById('title').value;
-    document.getElementById('resContact').innerText = `Email: ${document.getElementById('email').value} | Phone: ${document.getElementById('phone').value}`;
-    document.getElementById('resGitHub').innerHTML = `GitHub: <a href="${document.getElementById('github').value}" target="_blank">${document.getElementById('github').value}</a>`;
-    document.getElementById('resSummary').innerText = document.getElementById('summary').value;
-    document.getElementById('resEducation').innerText = document.getElementById('education').value;
-    document.getElementById('resSkills').innerText = document.getElementById('skills').value;
-    document.getElementById('resProjects').innerText = document.getElementById('projects').value;
-    document.getElementById('resExperience').innerText = document.getElementById('experience').value;
+const name = document.getElementById("name").value
+const title = document.getElementById("title").value
+const email = document.getElementById("email").value
+const phone = document.getElementById("phone").value
+const github = document.getElementById("github").value
 
-    // Hide form and show resume
-    form.style.display = 'none';
-    resumeOutput.style.display = 'block';
-});
+const summary = document.getElementById("summary").value
+const education = document.getElementById("education").value
+const skills = document.getElementById("skills").value
+const projects = document.getElementById("projects").value
+const experience = document.getElementById("experience").value
+
+document.getElementById("resName").innerText = name
+document.getElementById("resTitle").innerText = title
+document.getElementById("resContact").innerText = email + " | " + phone
+document.getElementById("resGitHub").innerText = github
+
+document.getElementById("resSummary").innerText = summary
+document.getElementById("resEducation").innerText = education
+document.getElementById("resSkills").innerText = skills
+document.getElementById("resProjects").innerText = projects
+document.getElementById("resExperience").innerText = experience
+
+document.getElementById("resumeOutput").style.display = "block"
+
+})
