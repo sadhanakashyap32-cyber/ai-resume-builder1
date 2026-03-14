@@ -1,18 +1,16 @@
-document.getElementById("resumeForm").addEventListener("submit", function(e){
+function generateResume(){
 
-e.preventDefault()
+let name = document.getElementById("name").value
+let title = document.getElementById("title").value
+let email = document.getElementById("email").value
+let phone = document.getElementById("phone").value
+let github = document.getElementById("github").value
 
-const name = document.getElementById("name").value
-const title = document.getElementById("title").value
-const email = document.getElementById("email").value
-const phone = document.getElementById("phone").value
-const github = document.getElementById("github").value
-
-const summary = document.getElementById("summary").value
-const education = document.getElementById("education").value
-const skills = document.getElementById("skills").value
-const projects = document.getElementById("projects").value
-const experience = document.getElementById("experience").value
+let summary = document.getElementById("summary").value
+let education = document.getElementById("education").value
+let skills = document.getElementById("skills").value
+let projects = document.getElementById("projects").value
+let experience = document.getElementById("experience").value
 
 document.getElementById("resName").innerText = name
 document.getElementById("resTitle").innerText = title
@@ -27,4 +25,5 @@ document.getElementById("resExperience").innerText = experience
 
 document.getElementById("resumeOutput").style.display = "block"
 
-})
+}
+
