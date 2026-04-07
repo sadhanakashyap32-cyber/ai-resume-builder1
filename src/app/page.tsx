@@ -22,10 +22,12 @@ export default function Home() {
     setIsExporting(true);
     const toastId = toast.loading("Generating high-quality PDF...");
     try {
-      await exportToPDF("resume-content", `resume-${data.fullName.toLowerCase().replace(/\s+/g, '-')}.pdf`);
+      const fileName = `resume-${(data.fullName || "resume").toLowerCase().replace(/\s+/g, '-')}.pdf`;
+      await exportToPDF("resume-content", fileName);
       toast.success("Resume downloaded successfully!", { id: toastId });
-    } catch (error: any) {
-      toast.error("Failed to generate PDF. Please try again.", { id: toastId });
+    } catch (err: any) {
+      console.error("PDF generation error:", err);
+      toast.error(err.message || "Failed to generate PDF. Please try again.", { id: toastId });
     } finally {
       setIsExporting(false);
     }
@@ -42,7 +44,13 @@ export default function Home() {
       toast.success("Resume published successfully!", { id: toastId });
     } catch (error: any) {
       console.error("Sharing error:", error);
-      toast.error("Failed to publish resume. Please check your Supabase setup.", { id: toastId });
+      
+      // Fallback for unconfigured API/database
+      localStorage.setItem("demo_share_data", JSON.stringify({ data, template }));
+      const url = `${window.location.origin}/share/demo`;
+      setShareUrl(url);
+      setIsShareModalOpen(true);
+      toast.success("Demo link generated! (Configure Supabase for permanent links)", { id: toastId });
     } finally {
       setIsSharing(false);
     }

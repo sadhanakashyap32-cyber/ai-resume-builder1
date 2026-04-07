@@ -1,11 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
+import { ResumeData } from '@/types/resume';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export async function saveResume(user_id: string, resume_data: any, template: string) {
+export async function saveResume(user_id: string, resume_data: ResumeData, template: string) {
   const { data, error } = await supabase
     .from('resumes')
     .upsert({

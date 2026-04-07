@@ -1,6 +1,6 @@
 import React from "react";
 import { ResumeData } from "@/types/resume";
-import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Mail, Phone, ExternalLink } from "lucide-react";
 
 export function ModernTemplate({ data }: { data: ResumeData }) {
   return (

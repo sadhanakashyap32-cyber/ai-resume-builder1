@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { supabase, saveResume, fetchResumes } from "@/lib/supabase";
+import { saveResume } from "@/lib/supabase";
+import { initialResumeData } from "@/constants/initialData";
 
 export default function TestPage() {
   const [aiResponse, setAiResponse] = useState("");
@@ -24,8 +25,8 @@ export default function TestPage() {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       setAiResponse(data.content);
-    } catch (err: any) {
-      setAiResponse("Error: " + err.message);
+    } catch (err: unknown) {
+      setAiResponse("Error: " + (err as Error).message);
     } finally {
       setLoading(false);
     }
@@ -39,12 +40,12 @@ export default function TestPage() {
       // Note: This uses a dummy user_id. 
       // If you haven't set up Auth or RLS properly, this might fail unless RLS is off.
       const dummyUserId = "00000000-0000-0000-0000-000000000000"; 
-      const dummyData = { fullName: "Test User", email: "test@example.com" };
+      const dummyData = { ...initialResumeData, fullName: "Test User", email: "test@example.com" };
       
       const result = await saveResume(dummyUserId, dummyData, "modern");
       setDbStatus("Success! Saved ID: " + result.id);
-    } catch (err: any) {
-      setDbStatus("Error: " + err.message + ". (Check if you ran the SQL schema in Supabase)");
+    } catch (err: unknown) {
+      setDbStatus("Error: " + (err as Error).message + ". (Check if you ran the SQL schema in Supabase)");
     } finally {
       setLoading(false);
     }
@@ -56,7 +57,7 @@ export default function TestPage() {
       
       <section className="p-6 border rounded-lg shadow-sm space-y-4">
         <h2 className="text-xl font-semibold">1. Gemini AI Test</h2>
-        <p className="text-sm text-gray-600">Sample input: "Junior Developer at TechCorp"</p>
+        <p className="text-sm text-gray-600">Sample input: &quot;Junior Developer at TechCorp&quot;</p>
         <button 
           onClick={testAI}
           disabled={loading}
@@ -85,7 +86,7 @@ export default function TestPage() {
       </section>
 
       <p className="text-xs text-gray-400">
-        Note: Ensure your .env.local has valid keys and you've run the SQL schema in Supabase.
+        Note: Ensure your .env.local has valid keys and you&apos;ve run the SQL schema in Supabase.
       </p>
     </div>
   );

@@ -9,8 +9,8 @@ export async function generateResumeContent(prompt: string) {
     const response = await result.response;
     const text = response.text();
     return text;
-  } catch (error: any) {
-    console.error("Gemini API Error:", error.message);
+  } catch (error: unknown) {
+    console.error("Gemini API Error:", (error as Error).message);
     throw new Error("Failed to generate content. Please check your API key.");
   }
 }

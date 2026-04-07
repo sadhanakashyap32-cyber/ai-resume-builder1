@@ -67,7 +67,7 @@ export function CritiqueModal({ isOpen, onClose, result }: CritiqueModalProps) {
                 Overall Impression
               </h3>
               <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed italic border-l-4 border-blue-500 pl-4 py-1">
-                "{result.summary}"
+                &quot;{result.summary}&quot;
               </p>
             </section>
 

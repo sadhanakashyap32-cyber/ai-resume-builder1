@@ -24,13 +24,15 @@ export function ResumeProvider({ children }: { children: React.ReactNode }) {
     
     if (savedData) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setData(JSON.parse(savedData));
-      } catch (e) {
+      } catch {
         console.error("Failed to parse saved resume data");
       }
     }
     
     if (savedTemplate) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTemplate(savedTemplate as "modern" | "classic");
     }
   }, []);

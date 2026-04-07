@@ -1,39 +1,46 @@
-import { supabase } from "@/lib/supabase";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { ModernTemplate } from "@/components/templates/ModernTemplate";
 import { ClassicTemplate } from "@/components/templates/ClassicTemplate";
-import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Sparkles, ArrowLeft } from "lucide-react";
-import DemoShareClient from "@/components/builder/DemoShareClient";
+import { Sparkles, ArrowLeft, AlertCircle } from "lucide-react";
+import { initialResumeData } from "@/constants/initialData";
+import { ResumeData } from "@/types/resume";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export default function DemoShareClient() {
+  const [data, setData] = useState<ResumeData>(initialResumeData);
+  const [template, setTemplate] = useState<string>("modern");
+  const [mounted, setMounted] = useState(false);
 
-// Next.js 16 — params is a Promise, must be awaited
-export default async function SharePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
-
-  const { data: resume, error } = await supabase
-    .from("resumes")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error || !resume) {
-    if (id === "demo") {
-      return <DemoShareClient />;
+  useEffect(() => {
+    setMounted(true);
+    try {
+      const stored = localStorage.getItem("demo_share_data");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.data) setData(parsed.data);
+        if (parsed.template) setTemplate(parsed.template);
+      }
+    } catch (e) {
+      console.error("Failed to load demo share data", e);
     }
-    return notFound();
-  }
+  }, []);
 
-  const { resume_data, template } = resume;
+  if (!mounted) return null;
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:from-[#0a0a14] dark:via-[#0f0f1e] dark:to-[#0a0a14] flex flex-col items-center py-12 px-4">
-      {/* Branding Header */}
+      {/* Demo Warning Banner */}
+      <div className="w-full max-w-[210mm] mb-6 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-xl flex items-center justify-between text-orange-800 dark:text-orange-300 animate-slide-up">
+        <div className="flex items-center gap-2">
+          <AlertCircle size={18} />
+          <p className="text-sm font-medium">
+             This is a local demo link. To create permanent shareable links, configure your Supabase API keys in <code className="px-1.5 py-0.5 bg-orange-100 dark:bg-orange-900/50 rounded text-xs">.env.local</code>.
+          </p>
+        </div>
+      </div>
+
       <div className="w-full max-w-[210mm] mb-6 flex items-center justify-between animate-fade-in">
         <Link
           href="/"
@@ -52,16 +59,14 @@ export default async function SharePage({
         </div>
       </div>
 
-      {/* Resume Container */}
       <div className="w-full max-w-[210mm] bg-white shadow-2xl rounded-lg overflow-hidden animate-slide-up ring-1 ring-zinc-200">
         {template === "modern" ? (
-          <ModernTemplate data={resume_data} />
+          <ModernTemplate data={data} />
         ) : (
-          <ClassicTemplate data={resume_data} />
+          <ClassicTemplate data={data} />
         )}
       </div>
 
-      {/* Footer Branding */}
       <footer className="mt-12 text-zinc-500 dark:text-zinc-400 text-sm flex flex-col items-center gap-4 animate-fade-in">
         <p>Built with ✨ AI Resume Builder</p>
         <Link

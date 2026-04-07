@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+export const maxDuration = 60; // Allow AI route to run longer on Vercel (Hobby limit is 60s)
+
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
 
 export async function POST(req: Request) {
@@ -30,8 +32,8 @@ export async function POST(req: Request) {
     const text = result.response.text();
 
     return NextResponse.json({ content: text.trim() });
-  } catch (error: any) {
-    console.error("Gemini API Error:", error.message);
+  } catch (error: unknown) {
+    console.error("Gemini API Error:", (error as Error).message);
     return NextResponse.json({ error: "Failed to generate content. Please try again later." }, { status: 500 });
   }
 }

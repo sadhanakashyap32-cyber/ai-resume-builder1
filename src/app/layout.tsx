@@ -4,7 +4,7 @@ import "./globals.css";
 import { ResumeProvider } from "@/lib/context/ResumeContext";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
-import { ThemeToggle } from "@/components/ThemeToggle";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

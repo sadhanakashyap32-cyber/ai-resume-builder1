@@ -15,8 +15,8 @@ export async function refineContent(section: string, userInput: string) {
 
     const data = await response.json();
     return data.content;
-  } catch (error: any) {
-    console.error("AI Service Error:", error.message);
+  } catch (error: unknown) {
+    console.error("AI Service Error:", (error as Error).message);
     throw error;
   }
 }

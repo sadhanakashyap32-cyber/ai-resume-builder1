@@ -14,7 +14,7 @@ A professional, production-ready AI-powered Resume Builder built with **Next.js 
 - **🌐 Public Sharing**: 
   - Publish your resume to the cloud via **Supabase**.
   - Generate a unique, shareable public link (e.g., `/share/[id]`) for recruiters.
-- **📄 PDF Export**: High-quality, scalable PDF generation using `html2canvas` and `jsPDF`.
+- **📄 PDF Export**: High-quality, reliable PDF generation using native browser print capabilities ensuring authentic vector text (fully ATS-readable) without canvas conversion issues.
 - **💾 Auto-Save**: Local storage integration ensures your work is never lost.
 - **✨ Premium UI/UX**: Built with **Framer Motion** for smooth transitions and **Sonner** for clean notifications.
 
@@ -63,4 +63,4 @@ Open [http://localhost:3000](http://localhost:3000) to start building!
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Icons**: [Lucide React](https://lucide.dev/)
 - **Toasts**: [Sonner](https://sonner.stevenly.me/)
-- **PDF Generation**: [jsPDF](https://github.com/parallax/jsPDF) & [html2canvas](https://html2canvas.hertzen.com/)
+- **PDF Generation**: Native Browser Print Engine (Wait-and-Print method)
