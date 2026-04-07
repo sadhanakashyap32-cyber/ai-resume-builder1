@@ -43,7 +43,7 @@ export default function DemoShareClient() {
 
       <div className="w-full max-w-[210mm] mb-6 flex items-center justify-between animate-fade-in">
         <Link
-          href="/"
+          href="/builder"
           className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-full shadow-sm hover:shadow-md transition-all text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400"
         >
           <ArrowLeft size={14} />
@@ -70,7 +70,7 @@ export default function DemoShareClient() {
       <footer className="mt-12 text-zinc-500 dark:text-zinc-400 text-sm flex flex-col items-center gap-4 animate-fade-in">
         <p>Built with ✨ AI Resume Builder</p>
         <Link
-          href="/"
+          href="/builder"
           className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-bold rounded-full shadow-md shadow-indigo-200 dark:shadow-indigo-900 hover:shadow-lg hover:from-indigo-700 hover:to-purple-700 transition-all active:scale-95"
         >
           Create Your Own AI Resume →

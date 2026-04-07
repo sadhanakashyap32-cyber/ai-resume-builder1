@@ -1,130 +1,117 @@
-"use client";
-
-import { ResumeBuilder } from "@/components/builder/ResumeBuilder";
-import { ResumePreview } from "@/components/templates/ResumePreview";
-import { useState } from "react";
-import { useResume } from "@/lib/context/ResumeContext";
-import { exportToPDF } from "@/lib/utils/export";
-import { saveResume } from "@/lib/supabase";
-import { toast } from "sonner";
-import { Loader2, Share2, FileDown, Sparkles } from "lucide-react";
-import { ShareModal } from "@/components/builder/ShareModal";
+import Link from "next/link";
+import { Sparkles, ArrowRight, Wand2, FileText, CheckCircle2, ShieldCheck } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
-export default function Home() {
-  const { data, template, setTemplate } = useResume();
-  const [isExporting, setIsExporting] = useState(false);
-  const [isSharing, setIsSharing] = useState(false);
-  const [shareUrl, setShareUrl] = useState("");
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-
-  const handleDownload = async () => {
-    setIsExporting(true);
-    const toastId = toast.loading("Generating high-quality PDF...");
-    try {
-      const fileName = `resume-${(data.fullName || "resume").toLowerCase().replace(/\s+/g, '-')}.pdf`;
-      await exportToPDF("resume-content", fileName);
-      toast.success("Resume downloaded successfully!", { id: toastId });
-    } catch (err: any) {
-      console.error("PDF generation error:", err);
-      toast.error(err.message || "Failed to generate PDF. Please try again.", { id: toastId });
-    } finally {
-      setIsExporting(false);
-    }
-  };
-
-  const handleShare = async () => {
-    setIsSharing(true);
-    const toastId = toast.loading("Publishing your resume...");
-    try {
-      const savedResume = await saveResume("guest-user", data, template);
-      const url = `${window.location.origin}/share/${savedResume.id}`;
-      setShareUrl(url);
-      setIsShareModalOpen(true);
-      toast.success("Resume published successfully!", { id: toastId });
-    } catch (error: any) {
-      console.error("Sharing error:", error);
-      
-      // Fallback for unconfigured API/database
-      localStorage.setItem("demo_share_data", JSON.stringify({ data, template }));
-      const url = `${window.location.origin}/share/demo`;
-      setShareUrl(url);
-      setIsShareModalOpen(true);
-      toast.success("Demo link generated! (Configure Supabase for permanent links)", { id: toastId });
-    } finally {
-      setIsSharing(false);
-    }
-  };
-
+export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-[#f8f9ff] dark:bg-[#0a0a14]">
-      {/* ─── Premium Header ─── */}
-      <header className="sticky top-0 z-50 w-full border-b border-indigo-100 dark:border-indigo-950 bg-white/80 dark:bg-[#0f0f1e]/80 backdrop-blur-xl shadow-sm">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-violet-50 dark:from-[#0a0a14] dark:via-[#0f0f1e] dark:to-[#13111c] text-zinc-900 dark:text-zinc-100 flex flex-col font-sans overflow-x-hidden">
+      
+      {/* Clean Navbar */}
+      <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-[#0a0a14]/80 backdrop-blur-xl border-b border-indigo-100/50 dark:border-indigo-900/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-indigo-900">
-              <Sparkles size={18} className="text-white" />
+          <div className="flex items-center gap-2.5 group cursor-pointer">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-none group-hover:scale-105 transition-transform duration-300">
+              <Sparkles size={20} className="text-white" />
             </div>
-            <div>
-              <h1 className="font-black text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                ResumeAI
-              </h1>
-              <p className="text-[10px] text-zinc-400 -mt-0.5 leading-none">Powered by Gemini</p>
-            </div>
+            <span className="font-black text-xl tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+              ResumeAI
+            </span>
           </div>
 
-          {/* Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <ThemeToggle />
-            <select
-              value={template}
-              onChange={(e) => setTemplate(e.target.value as "modern" | "classic")}
-              className="bg-white dark:bg-zinc-900 border border-indigo-100 dark:border-indigo-900/50 rounded-lg px-3 py-1.5 text-sm outline-none cursor-pointer text-zinc-700 dark:text-zinc-300 hover:border-indigo-300 transition-colors shadow-sm"
+            <Link 
+              href="/builder" 
+              className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:opacity-90 transition-opacity"
             >
-              <option value="modern" className="text-black">✦ Modern</option>
-              <option value="classic" className="text-black">📄 Classic</option>
-            </select>
-
-            <button
-              onClick={handleShare}
-              disabled={isSharing}
-              className="px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-600 border border-indigo-200 hover:from-indigo-100 hover:to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 dark:text-indigo-400 dark:border-indigo-800 disabled:opacity-50 shadow-sm"
-            >
-              {isSharing ? <Loader2 size={15} className="animate-spin" /> : <Share2 size={15} />}
-              Share
-            </button>
-
-            <button
-              onClick={handleDownload}
-              disabled={isExporting}
-              className="px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-md shadow-indigo-200 dark:shadow-indigo-900 disabled:opacity-50 active:scale-95"
-            >
-              {isExporting ? <Loader2 size={15} className="animate-spin" /> : <FileDown size={15} />}
-              Download PDF
-            </button>
+              Go to Builder
+            </Link>
           </div>
         </div>
-      </header>
+      </nav>
 
-      <ShareModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        shareUrl={shareUrl}
-      />
+      {/* Hero Section */}
+      <main className="flex-1 flex flex-col items-center justify-center pt-32 pb-20 px-4">
+        <div className="max-w-4xl mx-auto text-center space-y-8 animate-slide-up">
+          
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 text-indigo-600 dark:text-indigo-300 text-xs sm:text-sm font-semibold tracking-wide">
+            <Wand2 size={16} className="animate-pulse" />
+            Powered by Gemini AI Next-Gen Models
+          </div>
+          
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter leading-[1.1]">
+            Build a <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 dark:from-indigo-400 dark:via-purple-400 dark:to-violet-400 bg-clip-text text-transparent">professional resume</span> in minutes
+          </h1>
+          
+          <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            Stop struggling with formatting. Let our AI analyze your experience, refine your bullet points, and generate an ATS-optimized professional resume instantly.
+          </p>
+          
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link 
+              href="/builder" 
+              className="group flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-xl shadow-indigo-600/20 hover:shadow-2xl hover:shadow-indigo-600/30 hover:-translate-y-1 transition-all duration-300"
+            >
+              Get Started for Free
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            
+            <a 
+              href="#features" 
+              className="flex items-center justify-center w-full sm:w-auto px-8 py-4 rounded-2xl font-bold text-zinc-700 dark:text-zinc-300 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+            >
+              View Features
+            </a>
+          </div>
 
-      {/* ─── Split Layout ─── */}
-      <div className="flex flex-col lg:flex-row min-h-[calc(100vh-64px)] overflow-hidden">
-        {/* Editor (Left) */}
-        <div className="w-full lg:w-1/2 overflow-y-auto bg-white/60 dark:bg-[#0d0d1f]/60 border-r border-indigo-100 dark:border-indigo-950 backdrop-blur-sm">
-          <ResumeBuilder />
+          <div className="pt-10 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">
+            <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-emerald-500" /> ATS-Friendly</span>
+            <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-emerald-500" /> No signup required</span>
+            <span className="flex items-center gap-2"><ShieldCheck size={16} className="text-emerald-500" /> PDF Export</span>
+          </div>
         </div>
 
-        {/* Live Preview (Right) */}
-        <div className="w-full lg:w-1/2 p-8 bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:from-indigo-950/30 dark:via-purple-950/20 dark:to-blue-950/30 flex justify-center items-start overflow-y-auto">
-          <ResumePreview />
+        {/* Fancy Features Grid */}
+        <div id="features" className="w-full max-w-6xl mx-auto mt-32 grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          
+          {[
+            {
+              title: "AI Power Bullet Points",
+              desc: "Gemini AI instantly transforms your rough job descriptions into hard-hitting, professional bullet points.",
+              icon: <Wand2 size={24} className="text-purple-600 dark:text-purple-400" />,
+              color: "bg-purple-50 border-purple-100 dark:bg-purple-900/10 dark:border-purple-900/30"
+            },
+            {
+              title: "Live Resume Scoring",
+              desc: "Get real-time feedback and an ATS score as you type. See exactly what hiring managers want to see.",
+              icon: <CheckCircle2 size={24} className="text-indigo-600 dark:text-indigo-400" />,
+              color: "bg-indigo-50 border-indigo-100 dark:bg-indigo-900/10 dark:border-indigo-900/30"
+            },
+            {
+              title: "Beautiful Templates",
+              desc: "Choose between Modern and Classic themes, optimized for readability and instant PDF compilation.",
+              icon: <FileText size={24} className="text-blue-600 dark:text-blue-400" />,
+              color: "bg-blue-50 border-blue-100 dark:bg-blue-900/10 dark:border-blue-900/30"
+            }
+          ].map((feature, i) => (
+            <div key={i} className={`p-8 rounded-3xl border ${feature.color} hover:-translate-y-2 transition-transform duration-300 shadow-sm hover:shadow-xl`}>
+              <div className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-900 shadow-sm flex items-center justify-center mb-6">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+              <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-sm">
+                {feature.desc}
+              </p>
+            </div>
+          ))}
+          
         </div>
-      </div>
-    </main>
+      </main>
+      
+      {/* Footer */}
+      <footer className="w-full py-8 text-center text-zinc-500 dark:text-zinc-400 text-sm border-t border-indigo-50 dark:border-zinc-800/50 mt-auto">
+        Designed with AI. Free to use forever.
+      </footer>
+    </div>
   );
 }
